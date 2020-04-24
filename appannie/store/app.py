@@ -9,6 +9,7 @@ class App(object):
     RATINGS_ENDPOINT = '/apps/{market}/app/{product_id}/ratings'
     RANKS_ENDPOINT = '/apps/{market}/app/{product_id}/ranks'
     ADS_ENDPOINT = '/apps/{market}/app/{product_id}/ad_items'
+    DOWNLOADS_ENDPOINT = '/dashboard/{market}/item/{product_id}/downloads'
 
     def __init__(self, http_client, paginator, market, product_id):
         self.http_client = http_client
@@ -49,6 +50,11 @@ class App(object):
         data = self._format_data(start_date, end_date, **kwargs)
         uri = self._format_uri(self.REVIEWS_ENDPOINT)
         return self.paginator.make(uri, data=data, union_key='reviews')
+        
+    def downloads(self, start_date, end_date, **kwargs):
+        data = self._format_data(start_date, end_date, **kwargs)
+        uri = self._format_uri(self.DOWNLOADS_ENDPOINT)
+        return self.paginator.make(uri, data=data, union_key='downloads')
 
     def ratings(self, **kwargs):
         data = format_request_data(**kwargs)
